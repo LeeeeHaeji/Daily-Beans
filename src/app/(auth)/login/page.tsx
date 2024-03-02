@@ -1,36 +1,37 @@
 'use client';
 
 import React, { useState } from 'react';
-import { loginAPI } from '../../../services/auth';
+import { loginAPI } from '@/services/auth';
+
+type LoginData = {
+  username: String;
+  password: String;
+  login_type: String;
+};
 
 export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [userType, setUserType] = useState('');
 
-  const loginData = {
-    username,
-    password,
-    login_type: userType,
-  };
-
   const inputUsername = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(e.target.value);
-    console.log(username);
   };
 
   const inputPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
 
-  // const inputLoginType = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setLoginType(e.target.value);
-  // };
-
   const submitLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    loginAPI(loginData);
+    const data: LoginData = {
+      username,
+      password,
+      login_type: userType,
+    };
+
+    loginAPI(data);
   };
 
   return (
