@@ -46,21 +46,28 @@ export default function Seller() {
 
   return (
     <form onSubmit={submitLogin}>
-      <Default signUpData={signUpData} setSignUpData={setSignUpData} />
+      <div className="form-data seller">
+        <Default signUpData={signUpData} setSignUpData={setSignUpData} />
 
-      <p>사업자 등록번호</p>
-      <input type="number" value={companyRegNum} onChange={inputCompanyRegNum} />
+        <div className="data-wrap">
+          <p>사업자 등록번호</p>
+          <input type="number" value={companyRegNum} onChange={inputCompanyRegNum} />
 
-      <p>스토어 이름</p>
-      <input type="text" value={storeName} onChange={inputStoreName} />
+          <p>스토어 이름</p>
+          <input type="text" value={storeName} onChange={inputStoreName} />
+        </div>
+      </div>
 
-      <label htmlFor="confirm">
+      <label htmlFor="confirm" className="confirm">
         <input type="checkbox" id="confirm" />
+        <span className="on"> </span>
         데일리빈즈의 <strong>이용약관</strong> 및 <strong>개인정보처리방침</strong>에 대한 내용을
         확인하였고 동의합니다.
       </label>
 
-      <button type="submit"> 가입하기 </button>
+      <button type="submit" className="submit-button">
+        가입하기
+      </button>
     </form>
   );
 }

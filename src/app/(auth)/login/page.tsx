@@ -6,8 +6,10 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { loginAPI } from '@/services/auth';
 import { LoginData } from './types';
-import '@/styles/auth/login.scss';
-import '@/styles/auth/toggle.scss';
+import '@/styles/auth/login/login.scss';
+import '@/styles/auth/login/toggle.scss';
+import '@/styles/button.scss';
+import '@/styles/auth/common.scss';
 
 export default function Login() {
   const [username, setUsername] = useState('');
@@ -59,13 +61,13 @@ export default function Login() {
   };
 
   return (
-    <section className="loginWrap">
+    <section className="container">
       <h1 className="a11y-hidden">Daily Beans</h1>
-      <Link href="/">
+      <Link href="/" className="logo">
         <Image src="svg/Daily-Beans.svg" alt="logo" width={428} height={74} />
       </Link>
       <form onSubmit={submitLogin}>
-        <div className="userType">
+        <div className="typeTap">
           <button
             type="button"
             className={userType === 'BUYER' ? 'buyer' : 'none'}
@@ -107,7 +109,7 @@ export default function Login() {
             </div>
             <p>테스트 계정으로 로그인</p>
           </div>
-          <button type="submit" className="">
+          <button type="submit" className="submit-button">
             로그인
           </button>
         </div>

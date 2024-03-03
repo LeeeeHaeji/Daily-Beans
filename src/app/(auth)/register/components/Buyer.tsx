@@ -3,6 +3,7 @@ import { signUpBuyer } from '@/services/auth';
 import Default from './default';
 
 import { SignUpData } from './types';
+import '@/styles/auth/register/register.scss';
 
 export default function Buyer() {
   const [signUpData, setSignUpData] = useState<SignUpData>({
@@ -34,13 +35,18 @@ export default function Buyer() {
 
   return (
     <form onSubmit={submitLogin}>
-      <Default signUpData={signUpData} setSignUpData={setSignUpData} />
-      <label htmlFor="confirm">
+      <div className="form-data">
+        <Default signUpData={signUpData} setSignUpData={setSignUpData} />
+      </div>
+      <label htmlFor="confirm" className="confirm">
         <input type="checkbox" id="confirm" />
+        <span className="on"> </span>
         데일리빈즈의 <strong>이용약관</strong> 및 <strong>개인정보처리방침</strong>에 대한 내용을
         확인하였고 동의합니다.
       </label>
-      <button type="submit">가입하기</button>
+      <button type="submit" className="submit-button">
+        가입하기
+      </button>
     </form>
   );
 }
