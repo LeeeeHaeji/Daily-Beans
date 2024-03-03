@@ -37,7 +37,8 @@ export default function Buyer() {
       <Default signUpData={signUpData} setSignUpData={setSignUpData} />
       <label htmlFor="confirm">
         <input type="checkbox" id="confirm" />
-        데일리빈즈의 이용약관 및 개인정보처리방침에 대한 내용을 확인하였고 동의합니다.
+        데일리빈즈의 <strong>이용약관</strong> 및 <strong>개인정보처리방침</strong>에 대한 내용을
+        확인하였고 동의합니다.
       </label>
       <button type="submit">가입하기</button>
     </form>

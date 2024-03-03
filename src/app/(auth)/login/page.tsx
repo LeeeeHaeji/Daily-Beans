@@ -1,18 +1,33 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import Image from 'next/image';
 import { loginAPI } from '@/services/auth';
-
-type LoginData = {
-  username: String;
-  password: String;
-  login_type: String;
-};
+import { LoginData } from './types';
+import '@/styles/auth/login.scss';
+import '@/styles/auth/toggle.scss';
 
 export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [userType, setUserType] = useState('');
+  const [userType, setUserType] = useState('BUYER');
+  const [isTest, setIsTest] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (isTest && userType === 'BUYER') {
+      setUsername('buyer1');
+      setPassword('hodu0910');
+    } else if (isTest && userType === 'SELLER') {
+      setUsername('seller1');
+      setPassword('hodu0910');
+    } else {
+      setUsername('');
+      setPassword('');
+    }
+  }, [isTest, userType]);
 
   const inputUsername = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(e.target.value);
@@ -20,6 +35,10 @@ export default function Login() {
 
   const inputPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
+  };
+
+  const testLoginCheckBox = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsTest(e.target.checked);
   };
 
   const submitLogin = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -31,23 +50,74 @@ export default function Login() {
       login_type: userType,
     };
 
-    loginAPI(data);
+    try {
+      await loginAPI(data);
+      router.back();
+    } catch (error) {
+      console.error(error); // 로그인 실패 처리
+    }
   };
 
   return (
-    <form onSubmit={submitLogin}>
-      <button type="button" onClick={() => setUserType('BUYER')}>
-        구매회원 로그인
-      </button>
-      <button type="button" onClick={() => setUserType('SELLER')}>
-        판매회원 로그인
-      </button>
+    <section className="loginWrap">
+      <h1 className="a11y-hidden">Daily Beans</h1>
+      <Link href="/">
+        <Image src="svg/Daily-Beans.svg" alt="logo" width={428} height={74} />
+      </Link>
+      <form onSubmit={submitLogin}>
+        <div className="userType">
+          <button
+            type="button"
+            className={userType === 'BUYER' ? 'buyer' : 'none'}
+            onClick={() => setUserType('BUYER')}
+          >
+            구매회원 로그인
+          </button>
+          <button
+            type="button"
+            className={userType === 'SELLER' ? 'seller' : 'none'}
+            onClick={() => setUserType('SELLER')}
+          >
+            판매회원 로그인
+          </button>
+        </div>
 
-      {/* <input type="text" value={loginType} onChange={inputLoginType} /> */}
-      <input type="text" value={username} onChange={inputUsername} />
-      <input type="text" value={password} onChange={inputPassword} />
+        <div className="login">
+          <div className="input-data">
+            <input type="text" value={username} onChange={inputUsername} placeholder="아이디" />
+            <input
+              type="password"
+              value={password}
+              onChange={inputPassword}
+              placeholder="비밀번호"
+            />
+          </div>
 
-      <button type="submit">로그인</button>
-    </form>
+          <div className="test-login">
+            {/* 토글버튼 */}
+            <div className="button r" id="button-3">
+              <input
+                type="checkbox"
+                className="checkbox"
+                onChange={testLoginCheckBox}
+                checked={isTest}
+              />
+              <div className="knobs"> </div>
+              <div className="layer"> </div>
+            </div>
+            <p>테스트 계정으로 로그인</p>
+          </div>
+          <button type="submit" className="">
+            로그인
+          </button>
+        </div>
+
+        <div className="link">
+          <Link href="/register">회원가입</Link>
+          <span>|</span>
+          <Link href="/">비밀번호 찾기</Link>
+        </div>
+      </form>
+    </section>
   );
 }
