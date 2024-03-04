@@ -14,7 +14,8 @@
 
     input {
       border-bottom: 1px solid #8d7d75;
-      padding: 30px 0 20px;
+      padding: 30px 0 10px;
+      padding-left: 5px;
 
       &:focus {
         outline: none;
@@ -41,4 +42,8 @@
   color: #333333;
 
   font-size: 1.8rem;
+}
+
+.errorMsg {
+  color: red;
 }

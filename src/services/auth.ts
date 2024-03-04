@@ -4,16 +4,13 @@ import { instance } from './instance';
 export const loginAPI = async (userData: object) => {
   try {
     const res = await instance.post('/accounts/login/', userData);
-    console.log(res);
+    localStorage.setItem('token', res.data.token);
     return [res.data];
   } catch (error: unknown) {
     if (error instanceof Error) {
-      console.log(userData);
       const axiosError = error as any;
       if (axiosError.response) {
-        console.log(axiosError.response.data);
-      } else {
-        console.log(error.message); // Error 인스턴스지만, 응답이 없는 경우
+        return [axiosError.response.data];
       }
     }
     return null;
