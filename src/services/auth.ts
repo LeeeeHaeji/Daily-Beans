@@ -56,3 +56,19 @@ export const signUpSeller = async (userData: object) => {
     return null;
   }
 };
+
+// 계정 검증
+export const validIdAPI = async (userData: object) => {
+  try {
+    const res = await instance.post('/accounts/signup/valid/username/', userData);
+    return [res.data];
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      const axiosError = error as any;
+      if (axiosError.response) {
+        return [axiosError.response.data];
+      }
+    }
+    return null;
+  }
+};

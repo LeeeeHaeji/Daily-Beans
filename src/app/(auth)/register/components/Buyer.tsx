@@ -30,7 +30,7 @@ export default function Buyer() {
       phone_number: `${firstNum}${secondNum}${thirdNum}`,
     };
 
-    signUpBuyer(data);
+    await signUpBuyer(data);
   };
 
   return (

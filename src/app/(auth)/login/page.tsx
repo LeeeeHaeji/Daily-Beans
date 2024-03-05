@@ -115,7 +115,7 @@ export default function Login() {
       <Link href="/" className="logo">
         <Image src="svg/Daily-Beans.svg" alt="logo" width={428} height={74} priority />
       </Link>
-      <form onSubmit={submitLogin}>
+      <form onSubmit={submitLogin} className="form">
         <div className="typeTap">
           <button
             type="button"
@@ -142,7 +142,7 @@ export default function Login() {
               onChange={inputID}
               placeholder="아이디"
             />
-            {idErrorMsg ? <p className="id errorMsg">*이 필드는 필수 항목입니다.</p> : ''}
+            {idErrorMsg ? <p className="errorMsg">*이 필드는 필수 항목입니다.</p> : ''}
             <input
               type="password"
               value={password}
@@ -150,8 +150,8 @@ export default function Login() {
               onChange={inputPassword}
               placeholder="비밀번호"
             />
-            {pwdErrorMsg ? <p className="pwd errorMsg">*이 필드는 필수 항목입니다.</p> : ''}
-            {failMsg ? <p className="fail errorMsg">*{failMsg}</p> : ''}
+            {pwdErrorMsg ? <p className="errorMsg">*이 필드는 필수 항목입니다.</p> : ''}
+            {failMsg ? <p className="errorMsg">*{failMsg}</p> : ''}
           </div>
 
           <div className="test-login">
