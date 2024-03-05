@@ -1,4 +1,6 @@
 .input-wrap {
+  // background-color: #21bf48;
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -29,6 +31,13 @@
   }
 }
 
+.validCheck {
+  position: absolute;
+
+  right: 15px;
+  top: calc(23px + 10px + 14px);
+}
+
 .phone-number {
   width: 100%;
   display: flex;
@@ -49,5 +58,8 @@
       width: 100%;
       padding: 0;
     }
+  }
+  .errorMsg {
+    color: red;
   }
 }

@@ -142,7 +142,7 @@ export default function Login() {
               onChange={inputID}
               placeholder="아이디"
             />
-            {idErrorMsg ? <p className="errorMsg">*이 필드는 필수 항목입니다.</p> : ''}
+            {idErrorMsg ? <p className="errorMsg">*필수 정보입니다.</p> : ''}
             <input
               type="password"
               value={password}
@@ -150,7 +150,7 @@ export default function Login() {
               onChange={inputPassword}
               placeholder="비밀번호"
             />
-            {pwdErrorMsg ? <p className="errorMsg">*이 필드는 필수 항목입니다.</p> : ''}
+            {pwdErrorMsg ? <p className="errorMsg">*필수 정보입니다.</p> : ''}
             {failMsg ? <p className="errorMsg">*{failMsg}</p> : ''}
           </div>
 

@@ -17,7 +17,7 @@ export default function Register() {
     <section className="container">
       <h1 className="a11y-hidden">Daily Beans</h1>
       <Link href="/" className="logo">
-        <Image src="svg/Daily-Beans.svg" alt="logo" width={428} height={74} />
+        <Image src="svg/Daily-Beans.svg" alt="logo" width={428} height={74} priority />
       </Link>
       <section className="join">
         <div className="typeTap">
