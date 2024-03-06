@@ -78,7 +78,6 @@ export default function Login() {
 
     try {
       const response = await loginAPI(data);
-      console.log(response);
       let tempIdErrorMsg = '';
       let tempPwdErrorMsg = '';
       let tempFailMsg = '';

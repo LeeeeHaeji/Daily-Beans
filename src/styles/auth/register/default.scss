@@ -1,5 +1,4 @@
 .input-wrap {
-  // background-color: #21bf48;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -20,14 +19,6 @@
       padding: 0 32px;
       border-radius: 5px;
     }
-  }
-
-  .errorMsg {
-    color: red;
-  }
-
-  .SuccessMsg {
-    color: #21bf48;
   }
 }
 

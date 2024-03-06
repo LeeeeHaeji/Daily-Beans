@@ -24,7 +24,6 @@ export const signUpBuyer = async (userData: object) => {
     return [res.data];
   } catch (error: unknown) {
     if (error instanceof Error) {
-      console.log(userData);
       const axiosError = error as any;
       if (axiosError.response) {
         return [axiosError.response.data];
@@ -41,12 +40,9 @@ export const signUpSeller = async (userData: object) => {
     return [res.data];
   } catch (error: unknown) {
     if (error instanceof Error) {
-      console.log(userData);
       const axiosError = error as any;
       if (axiosError.response) {
-        console.log(axiosError.response.data);
-      } else {
-        console.log(error.message); // Error 인스턴스지만, 응답이 없는 경우
+        return [axiosError.response.data];
       }
     }
     return null;
@@ -63,7 +59,26 @@ export const validIdAPI = async (userData: object) => {
       const axiosError = error as any;
 
       if (axiosError.response) {
-        console.log(axiosError.response.data);
+        return [axiosError.response.data];
+      }
+    }
+    return null;
+  }
+};
+
+// 사업자 등록번호 검증
+export const validCompany = async (userData: object) => {
+  try {
+    const res = await instance.post(
+      '/accounts/signup/valid/company_registration_number/',
+      userData,
+    );
+    return [res.data];
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      const axiosError = error as any;
+
+      if (axiosError.response) {
         return [axiosError.response.data];
       }
     }

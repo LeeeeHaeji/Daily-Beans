@@ -17,9 +17,6 @@ export default function Buyer() {
     thirdNum: '',
   });
 
-  const [phoneNumValidMsg, setPhoneNumValidMsg] = useState('');
-  const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
-
   const {
     idValidMsg,
     idSuccessMsg,
@@ -28,47 +25,32 @@ export default function Buyer() {
     nickNameValidMsg,
     initialPwdValid,
     initialPwd2Valid,
+    phoneNumValidMsg,
     validIdClick,
     handleIdBlur,
     handlePwdBlur,
     handlePwd2Blur,
     handleNickNameBlur,
+    submitLogin,
   } = ValidMsg(signUpData);
 
+  const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
+  const [isChecked, setIsChecked] = useState(false);
+
+  const confirmCheckBox = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsChecked(e.target.checked);
+  };
+
   useEffect(() => {
-    if (idValidMsg || pwdValidMsg || pwd2ValidMsg || nickNameValidMsg) {
+    if (idValidMsg || pwdValidMsg || pwd2ValidMsg || nickNameValidMsg || !isChecked) {
       setIsSubmitDisabled(true);
     } else {
       setIsSubmitDisabled(false);
     }
-  }, [idValidMsg, pwdValidMsg, pwd2ValidMsg, nickNameValidMsg]);
-
-  const submitLogin = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const { username, password, password2, userNickName, firstNum, secondNum, thirdNum } =
-      signUpData;
-
-    const data = {
-      username,
-      password,
-      password2,
-      name: userNickName,
-      phone_number: `${firstNum}${secondNum}${thirdNum}`,
-    };
-
-    const response = await signUpBuyer(data);
-    let tempphoneNumErrorMsg = '';
-
-    if (response?.[0].phone_number) {
-      tempphoneNumErrorMsg = response?.[0].phone_number;
-    }
-
-    setPhoneNumValidMsg(tempphoneNumErrorMsg);
-  };
+  }, [idValidMsg, pwdValidMsg, pwd2ValidMsg, nickNameValidMsg, isChecked]);
 
   return (
-    <form onSubmit={submitLogin}>
+    <form onSubmit={(e) => submitLogin(e, signUpBuyer)}>
       <div className="form-data">
         <Default
           signUpData={signUpData}
@@ -89,7 +71,7 @@ export default function Buyer() {
         />
       </div>
       <label htmlFor="confirm" className="confirm">
-        <input type="checkbox" id="confirm" />
+        <input type="checkbox" id="confirm" onChange={confirmCheckBox} />
         <span className="on"> </span>
         데일리빈즈의 <strong>이용약관</strong> 및 <strong>개인정보처리방침</strong>에 대한 내용을
         확인하였고 동의합니다.
