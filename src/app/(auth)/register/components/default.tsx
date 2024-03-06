@@ -86,7 +86,7 @@ export default function Default({
         {idSuccessMsg ? <p className="SuccessMsg">*{idSuccessMsg}</p> : ''}
       </div>
 
-      <div className="input-wrap">
+      <div className="input-wrap pwd">
         <p>비밀번호</p>
         <input
           type="password"
@@ -105,7 +105,7 @@ export default function Default({
         {pwdValidMsg ? <p className="errorMsg">*{pwdValidMsg}</p> : ''}
       </div>
 
-      <div className="input-wrap">
+      <div className="input-wrap pwd">
         <p>비밀번호 재확인</p>
         <input
           type="password"

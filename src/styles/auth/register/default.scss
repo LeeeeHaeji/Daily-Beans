@@ -13,11 +13,17 @@
     }
 
     button {
+      width: 12.2rem;
       background-color: #8a5a44;
       color: white;
       font-size: 1.6rem;
-      padding: 0 32px;
       border-radius: 5px;
+    }
+  }
+
+  &.pwd {
+    input {
+      padding-right: 53px;
     }
   }
 }

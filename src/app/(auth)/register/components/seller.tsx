@@ -28,6 +28,7 @@ export default function Seller() {
     companySuccessMsg,
     storeValidMsg,
     validIdClick,
+    validCompanyClick,
     handleIdBlur,
     handlePwdBlur,
     handlePwd2Blur,
@@ -113,15 +114,20 @@ export default function Seller() {
         <div className="data-wrap">
           <div className="input-wrap ">
             <p>사업자 등록번호</p>
-            <input
-              type="number"
-              value={companyRegNum}
-              onChange={inputCompanyRegNum}
-              onBlur={() => handleCompanyBlur(companyRegNum, storeName)}
-            />
-            {companyValidMsg ? <p className="errorMsg">*{companyValidMsg}</p> : ''}
-            {companySuccessMsg ? <p className="SuccessMsg">*{companySuccessMsg}</p> : ''}
+            <div className="double-check">
+              <input
+                type="number"
+                value={companyRegNum}
+                onChange={inputCompanyRegNum}
+                onBlur={() => handleCompanyBlur(companyRegNum)}
+              />
+              <button type="button" onClick={() => validCompanyClick(companyRegNum, storeName)}>
+                인증
+              </button>
+            </div>
           </div>
+          {companyValidMsg ? <p className="errorMsg">*{companyValidMsg}</p> : ''}
+          {companySuccessMsg ? <p className="SuccessMsg">*{companySuccessMsg}</p> : ''}
           <div className="input-wrap ">
             <p>스토어 이름</p>
             <input

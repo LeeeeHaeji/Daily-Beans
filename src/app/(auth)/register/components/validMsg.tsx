@@ -18,7 +18,8 @@ const ValidMsg = (signUpData: SignUpData) => {
 
   const [storeValidMsg, setStoreValidMsg] = useState('');
 
-  const [isValidCheck, setIsValidCheck] = useState(false);
+  const [isValidIdCheck, setIsValidIdCheck] = useState(false);
+  const [isValidCompanyCheck, setIsValidCompanyCheck] = useState(false);
 
   const validIdPwd = async ({ username, password }: SignUpData) => {
     const patternID = /^[a-zA-Z0-9]{1,20}$/;
@@ -56,7 +57,7 @@ const ValidMsg = (signUpData: SignUpData) => {
     setIdValidMsg(tempIdValidMsg);
 
     if (tempIdSuccessMsg) {
-      setIsValidCheck(true);
+      setIsValidIdCheck(true);
     }
   };
 
@@ -108,7 +109,16 @@ const ValidMsg = (signUpData: SignUpData) => {
     }
   };
 
-  const handleCompanyBlur = async (companyRegNum: string, storeName: string) => {
+  const handleCompanyBlur = (companyRegNum: string) => {
+    if (!companyRegNum) {
+      setCompanyValidMsg('필수 정보입니다.');
+      setCompanySuccessMsg('');
+    } else {
+      setCompanyValidMsg('');
+    }
+  };
+
+  const validCompanyClick = async (companyRegNum: string, storeName: string) => {
     const { username, password, password2, userNickName, firstNum, secondNum, thirdNum } =
       signUpData;
 
@@ -128,17 +138,27 @@ const ValidMsg = (signUpData: SignUpData) => {
     data = { ...data, ...additionalData };
 
     const response = await validCompany(data);
-
     let tempCompanyValidMsg = '';
     let tempCompanySuccessMsg = '';
+    let lengthValid = true;
+
+    if (companyRegNum.length !== 10) {
+      lengthValid = false;
+    } else {
+      lengthValid = true;
+    }
 
     if (response?.[0].FAIL_Message === 'company_registration_number 필드를 추가해주세요 :)') {
-      tempCompanyValidMsg = '필수 정보입니다';
+      tempCompanyValidMsg = '필수 정보입니다.';
+    } else if (!lengthValid) {
+      tempCompanyValidMsg = '사업자 등록번호는 10개의 숫자로 구성되어있습니다.';
     } else {
       tempCompanyValidMsg = response?.[0].FAIL_Message;
     }
 
-    if (response?.[0].Success) {
+    if (response?.[0].Success && !lengthValid) {
+      tempCompanySuccessMsg = '';
+    } else if (response?.[0].Success) {
       tempCompanySuccessMsg = response?.[0].Success;
     } else {
       tempCompanySuccessMsg = '';
@@ -146,6 +166,10 @@ const ValidMsg = (signUpData: SignUpData) => {
 
     setCompanySuccessMsg(tempCompanySuccessMsg);
     setCompanyValidMsg(tempCompanyValidMsg);
+
+    if (tempCompanySuccessMsg) {
+      setIsValidCompanyCheck(true);
+    }
   };
 
   const handleStoreBlur = (storeName: string) => {
@@ -160,14 +184,18 @@ const ValidMsg = (signUpData: SignUpData) => {
     let tempStoreValidMsg = '';
     let tempCompanyValidMsg = '';
 
-    if (response?.[0].store_name) {
+    if (response?.[0].store_name[0] === '이 필드는 blank일 수 없습니다.') {
       tempStoreValidMsg = '필수 정보입니다.';
+    } else if (response?.[0].store_name[0]) {
+      tempStoreValidMsg = response?.[0].store_name[0];
     } else {
       tempStoreValidMsg = '';
     }
 
     if (response?.[0].company_registration_number) {
       tempCompanyValidMsg = '필수 정보입니다.';
+    } else if (!isValidCompanyCheck) {
+      tempCompanyValidMsg = '인증을 해주세요.';
     } else {
       tempCompanyValidMsg = '';
     }
@@ -208,7 +236,7 @@ const ValidMsg = (signUpData: SignUpData) => {
 
     if (response?.[0].username) {
       tempIdValidMsg = '필수 정보입니다.';
-    } else if (!isValidCheck) {
+    } else if (!isValidIdCheck) {
       tempIdValidMsg = '중복확인을 해주세요.';
     } else {
       tempIdValidMsg = '';
@@ -263,6 +291,7 @@ const ValidMsg = (signUpData: SignUpData) => {
     companySuccessMsg,
     storeValidMsg,
     validIdClick,
+    validCompanyClick,
     handleIdBlur,
     handlePwdBlur,
     handlePwd2Blur,
